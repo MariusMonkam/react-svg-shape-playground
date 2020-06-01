@@ -1,6 +1,10 @@
-import React from "react";
+import React,{useState} from "react";
 
 export default function Circle() {
+  const [maxcx,setMaxcx]=useState('');
+  const [r,setR]=useState(1);
+
+
   //function random color
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -16,16 +20,29 @@ export default function Circle() {
   }
 
   return (
+    <>
     <svg className="mysvg" width="500" height="400">
-      {[...Array(100)].map((_, i) => (
+      {[...Array(500)].map((_, i) => (
         <circle
           key={i}
-          cx={randomRangeInt(0, 500)}
+          cx={randomRangeInt(0, maxcx)}
           cy={randomRangeInt(0, 400)}
-          r={randomRangeInt(0, 20)}
+          r={randomRangeInt(1, r)}
           fill={getRandomColor()}
         />
       ))}
     </svg>
+    <div>
+      <label>cx:{maxcx}</label>
+      <input type="range" min="0" max="500" step="1"
+       value={maxcx} 
+       onChange={(e)=> setMaxcx(e.target.value)}/>{  }
+        <label>radius:{r}</label>
+       <input type="range" min="1" max="100" step="1"
+       value={r} 
+       onChange={(e)=> setR(e.target.value)}/>
+    </div>
+    </>
+    
   );
 }
