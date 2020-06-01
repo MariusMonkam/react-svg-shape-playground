@@ -1,9 +1,9 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 export default function Circle() {
-  const [maxcx,setMaxcx]=useState('');
-  const [r,setR]=useState(1);
-
+  const [maxcx, setMaxcx] = useState("");
+  const [r, setR] = useState(1);
+  const [isOn, setIsOn] = useState(true);
 
   //function random color
   function getRandomColor() {
@@ -21,28 +21,50 @@ export default function Circle() {
 
   return (
     <>
-    <svg className="mysvg" width="500" height="400">
-      {[...Array(500)].map((_, i) => (
-        <circle
-          key={i}
-          cx={randomRangeInt(0, maxcx)}
-          cy={randomRangeInt(0, 400)}
-          r={randomRangeInt(1, r)}
-          fill={getRandomColor()}
+      <svg className="mysvg" width="500" height="400">
+        {[...Array(500)].map((_, i) =>
+          isOn ? (
+            <circle
+              key={i}
+              cx={randomRangeInt(0, maxcx)}
+              cy={randomRangeInt(0, 400)}
+              r={randomRangeInt(1, r)}
+              fill={getRandomColor()}
+            />
+          ) : (
+            <rect
+              key={i}
+              width={400}
+              height={r}
+              x={randomRangeInt(0, maxcx)}
+              y={randomRangeInt(0, 400)}
+              fill={getRandomColor()}
+            />
+          )
+        )}
+      </svg>
+      <div>
+        {isOn ? <label>cx:{maxcx}</label> : <label>coord x:{maxcx}</label>}
+        <input
+          type="range"
+          min="0"
+          max="500"
+          step="1"
+          value={maxcx}
+          onChange={e => setMaxcx(e.target.value)}
         />
-      ))}
-    </svg>
-    <div>
-      <label>cx:{maxcx}</label>
-      <input type="range" min="0" max="500" step="1"
-       value={maxcx} 
-       onChange={(e)=> setMaxcx(e.target.value)}/>{  }
-        <label>radius:{r}</label>
-       <input type="range" min="1" max="100" step="1"
-       value={r} 
-       onChange={(e)=> setR(e.target.value)}/>
-    </div>
+        {}
+        {isOn ? <label>radius:{r}</label> : <label>Height:{r}</label>}
+        <input
+          type="range"
+          min="1"
+          max="100"
+          step="1"
+          value={r}
+          onChange={e => setR(e.target.value)}
+        />
+        <button onClick={() => setIsOn(!isOn)}>Switch Shape</button>
+      </div>
     </>
-    
   );
 }
