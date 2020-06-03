@@ -4,4 +4,11 @@
 }
 .mysvg{
   border: 2px solid;
+  display: block;
+  margin:auto;
+  
+}
+
+.mytext{
+  overflow-wrap:break-word;
 }
